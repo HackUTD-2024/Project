@@ -84,7 +84,7 @@ def analyze_financial_data(input_file):
 # For testing purposes, let's simulate uploading a file and getting a response
 if __name__ == "__main__":
     # Replace with a real file upload in your web app
-    file_path = "D:/VS Code Projects/Project/hackutd-project/backend/test bank statement data.csv"  # Path to your CSV or PDF file
+    file_path = "test bank statement data.csv"  # Path to your CSV or PDF file
     with open(file_path, 'rb') as f:
         analysis_output = analyze_financial_data(f)
         print(analysis_output)

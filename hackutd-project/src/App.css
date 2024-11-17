@@ -64,6 +64,18 @@
   margin-left: auto;
 }
 
+.react-markdown {
+  border: none; /* Removes borders */
+  box-shadow: none; /* Removes shadows */
+  background: none; /* Removes background colors */
+  color: inherit; /* Inherits text color from parent element */
+  margin: 0; /* Resets margins */
+  padding: 0; /* Resets padding */
+  font-family: inherit; /* Ensures font matches the surrounding style */
+  font-size: inherit; /* Ensures font size matches parent */
+  line-height: inherit; /* Matches line-height to the parent element */
+}
+
 .chat-window .bot p {
   text-align: left;
   background-color: #e6ee9c;

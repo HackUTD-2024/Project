@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -40,7 +41,7 @@ const Chatbot = () => {
       <div className="chat-window">
         {messages.map((message, index) => (
           <div key={index} className={message.sender}>
-            <p>{message.text}</p>
+            <p><ReactMarkdown className="react-markdown">{message.text}</ReactMarkdown></p>
           </div>
         ))}
       </div>

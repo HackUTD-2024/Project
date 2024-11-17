@@ -2,7 +2,18 @@
 import pandas as pd
 
 
-        
+def get_data(input_file):
+    try:
+        # Load the data
+        content = pd.read_csv(input_file)
+
+        # Preprocess the data
+        content['Transaction Date'] = pd.to_datetime(content['Transaction Date'])
+        content['Post Date'] = pd.to_datetime(content['Post Date'])
+        content['Amount'] = pd.to_numeric(content['Amount'], errors='coerce')
+        return content
+    except Exception as e:
+        print(f"Error: {e}")
 
 def process_file(input_file):
     # Read the input file
@@ -79,18 +90,32 @@ def process_file(input_file):
         # plt.show()
 
         # Display results
-        print("Category Statistics:")
-        print(category_stats)
-        print("Frequency of Transactions by Category:")
-        print(category_frequency)
-        print("Monthly Spending Stats:")
-        print(monthly_stats_spend)
-        print(monthly_stats_recieve)
-        print(total_revenue_sum)
-        print(total_spend_sum)
-        print(largest_3_spends)
-        print("High Spending Weeks:")
-        print(high_spending_weeks)
+        # print("Category Statistics:")
+        # print(category_stats)
+        # print("Frequency of Transactions by Category:")
+        # print(category_frequency)
+        # print("Monthly Spending Stats:")
+        # print(monthly_stats_spend)
+        # print(monthly_stats_recieve)
+        # print(total_revenue_sum)
+        # print(total_spend_sum)
+        # print(largest_3_spends)
+        # print("High Spending Weeks:")
+        # print(high_spending_weeks)
+
+        result = {
+            "Category Statistics": category_stats,
+            "Frequency of Transactions by Category": category_frequency,
+            "Monthly Spending Stats": {
+                "Spend": monthly_stats_spend,
+                "Receive": monthly_stats_recieve,
+            },
+            "Total Revenue Sum": total_revenue_sum,
+            "Total Spend Sum": total_spend_sum,
+            "Largest 3 Spends": largest_3_spends,
+            "High Spending Weeks": high_spending_weeks,
+        }
+        return result
     except Exception as e:
         print(f"Error: {e}")
 
