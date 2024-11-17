@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "material-ui": "^0.20.0",
+    "tailwind": "^4.0.0"
+  }
+}
