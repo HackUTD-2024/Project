@@ -1,5 +1,5 @@
 import React from 'react';
-import Chatbot from '../componets/Chatbot';
+import Chatbot from '../components/Chatbot';
 
 const Home = () => {
   return (
