@@ -1,3 +1,4 @@
+// src/components/Chatbot.js
 import React, { useState } from 'react';
 
 const Chatbot = () => {
@@ -9,8 +10,9 @@ const Chatbot = () => {
       const newMessages = [...messages, { text: input, sender: 'user' }];
       setMessages(newMessages);
 
+      // Mock chatbot response
       setTimeout(() => {
-        const botResponse = { text: 'Hello, how can I assist you?', sender: 'bot' };
+        const botResponse = { text: "Hello, how can I assist you?", sender: 'bot' };
         setMessages((prevMessages) => [...prevMessages, botResponse]);
       }, 1000);
 
@@ -20,13 +22,9 @@ const Chatbot = () => {
 
   return (
     <div className="chatbot-container">
-      <h2 className="chatbot-title">Chatbot</h2>
       <div className="chat-window">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`message-bubble ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}
-          >
+          <div key={index} className={message.sender}>
             <p>{message.text}</p>
           </div>
         ))}
