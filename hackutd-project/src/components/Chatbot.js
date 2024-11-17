@@ -1,20 +1,35 @@
-// src/components/Chatbot.js
 import React, { useState } from 'react';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (input.trim()) {
       const newMessages = [...messages, { text: input, sender: 'user' }];
       setMessages(newMessages);
 
-      // Mock chatbot response
-      setTimeout(() => {
-        const botResponse = { text: "Hello, how can I assist you?", sender: 'bot' };
-        setMessages((prevMessages) => [...prevMessages, botResponse]);
-      }, 1000);
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/ask', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: input }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Response from backend:', data);
+
+          const botResponse = { text: data.response, sender: 'bot' };
+          setMessages((prevMessages) => [...prevMessages, botResponse]);
+        } else {
+          console.error('Error with API response:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error communicating with backend:', error);
+      }
 
       setInput('');
     }

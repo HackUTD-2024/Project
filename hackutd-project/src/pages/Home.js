@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import Chatbot from '../componets/Chatbot';
+import Chatbot from '../components/Chatbot';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale);
