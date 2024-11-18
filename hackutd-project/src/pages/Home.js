@@ -97,6 +97,22 @@ const Home = () => {
       setSelectedCard(null);  // Clear any previously selected card
     }
   };
+    { title: 'Balance', description: 'Current account balance', key: 'balance' },
+    { title: 'Category Spending', description: 'Spending by Category', key: 'categorySpending' },
+    { title: 'Monthly Trends', description: 'Spending Trends', key: 'monthlyTrends' },
+    { title: 'Largest Transactions', description: '3 biggest transactions', key: 'topLargestTransactions' },
+    { title: 'Income vs Expenses', description: 'Comparison to track surplus or deficit.', key: 'incomeVsExpenses' },
+    { title: 'Transaction Frequency', description: 'Frequency of transactions per category.', key: 'transactionFrequency' },
+    { title: 'Predicted Credit Score', description: 'Credit Score', key: 'predictedCreditScore' },
+  ];
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUploadedFile(file);  // Simulate file upload and store it in state
+      setSelectedCard(null);  // Clear any previously selected card
+    }
+  };
 
   const closeModal = () => {
     setSelectedCard(null);
@@ -105,6 +121,8 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="left-section">
+      <h1>Welcome to U-Bank</h1>
+      <p style={{ fontSize: '20px' }}>Making Banking easy and informative for you</p>
       <h1>Welcome to U-Bank</h1>
       <p style={{ fontSize: '20px' }}>Making Banking easy and informative for you</p>
         <div className="card-container">
@@ -133,7 +151,19 @@ const Home = () => {
             onChange={handleFileUpload}
           />
         </div>
+          <label htmlFor="file-upload" className="file-upload-label">
+            Upload File
+          </label>
+          <input
+            type="file"
+            id="file-upload"
+            className="file-upload-input"
+            onChange={handleFileUpload}
+          />
+        </div>
       </div>
+
+    
 
     
 
