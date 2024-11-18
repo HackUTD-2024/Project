@@ -29,7 +29,7 @@ def chat():
             prompt_classification = 'The user may be asking about opening an account. Provide clear itemized steps for the process, including any required documentation and timelines.'
         elif prompt_type == 'GeneralFinancialInfo':
             prompt_classification = 'The user may be asking about general financial information. Provide well-rounded, fundamental advice, using simple language to explain financial concepts.'
-        elif prompt_type == 'InfoOnHowToDoSomething':
+        elif prompt_type == 'GeneralInfoOnHowToDoSomethingNotRegardingUserData':
             prompt_classification = 'The user may be asking how to do something related to finance. Provide step-by-step instructions, using simple and easy-to-follow language.'
         elif prompt_type == 'ExplainMyData':
             prompt_classification = 'The user may want an explanation of their financial data. Refer specifically to the statistics and data below. Only answer from them. The transaction date is in MM-DD-YYYY format'
@@ -64,17 +64,17 @@ def chat():
         # prompt engineering
         context = 'You are a personal financial assistant. Be very accurate and knowledgeable about personal finance. DO NOT MAKE MISTAKES. If available, first refer to previous information disclosed or data available and cite it. The user Data below has transaction date in format MM-DD-YYYY. "01" corresponds to January, "02" to February, "03" to March, "04" to April, "05" to May, "06" to June, "07" to July, "08" to August, "09" to September, "10" to October, "11" to November, and "12" to December.'
         # prompt_classification = 'The user may be asking about ' + prompt_type # do an if statement
-        instructions = 'Provide your response in on average 2 sentences such that an average adult can understand. Respond with good formatting (bullet points, new lines, etc). Generally be succinct and shorter answers, unless the user follows up and asks more in-depth. It is okay to say "i don\'t know or guide the user to a better source rather than making up information, but you should try your best to factually answer the user\'s query.'
+        instructions = 'Provide your response to the USER in on average 2 sentences such that an average adult can understand. Respond with good formatting (bullet points, new lines, etc). Generally be succinct and shorter answers, unless the user follows up and asks more in-depth. It is okay to say "i don\'t know or guide the user to a better source rather than making up information, but you should try your best to factually answer the user\'s query. BUT, do not add notes at the end that are intended for the instructions (the User should not know anything about the instructions provided and the format of the data provided)'
         statistics = process_file.process_file('C:/Users/abhir/Projects/HackUTD-Ripple/Project/hackutd-project/backend/test bank statement data.csv')
         if statistics is None:
             statistics = ""  # Or handle the error accordingly
-        elif isinstance(data, dict):
-            statistics = str(data)
+        elif isinstance(statistics, dict):
+            statistics = str(statistics)
         statistics = "Statistics: " + statistics
-        
-        data = str(process_file.get_data('C:/Users/abhir/Projects/HackUTD-Ripple/Project/hackutd-project/backend/test bank statement data.csv'))
-
+        data = process_file.get_data('C:/Users/abhir/Projects/HackUTD-Ripple/Project/hackutd-project/backend/test bank statement data.csv').to_string(index=False)
+        # print(data)
         full_prompt = context + "\n" + prompt_classification + "\n" + instructions + '\n' + statistics + "\n" + data + "\n" + message
+        print (full_prompt)
         # call the gradio chatbot
         result = gradio_client.predict(
             message=full_prompt,
@@ -89,7 +89,7 @@ def chat():
 
 def classify_Prompt_Type(msg):
     instructions = 'Classify the below user prompt into one of the following categories. Return a 1-word response. Be accurate.'
-    categories = 'Here are the categories: \n GreetingAndFormalities, OpenAccount, GeneralFinancialInfo, InfoOnHowToDoSomething, ExplainMyData, GoalIncreaseSavings, GoalDecreaseExpenditure, GoalRetirementPlans, GoalLongTerm, AnalyzeDataAndMakeStatistics, LookupSpecificInfoInMyData, FindTrendsInData, CalculateTax, CalculateCreditScore, PredictNextMonth, PredictLongTermOutlook, PredictNextMonthCreditScore, Other'
+    categories = 'Here are the categories: \n GreetingAndFormalities, OpenAccount, GeneralFinancialInfo, GeneralInfoOnHowToDoSomethingNotRegardingUserData, ExplainMyData, GoalIncreaseSavings, GoalDecreaseExpenditure, GoalRetirementPlans, GoalLongTerm, AnalyzeDataAndMakeStatistics, LookupSpecificInfoInMyData, FindTrendsInData, CalculateTax, CalculateCreditScore, PredictNextMonth, PredictLongTermOutlook, PredictNextMonthCreditScore, Other'
     fullPrompt = instructions + "\n" + categories + "\nHere is the prompt that you should classify:\n" + msg
     prompt_type = gradio_client.predict(
             message=fullPrompt,
